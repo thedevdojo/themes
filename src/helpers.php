@@ -13,8 +13,16 @@ if (!function_exists(theme_field)){
 			$content = $option_exists->value;
 		}
 
-		$row = (object)['required' => $required, 'field' => $key, 'type' => $type, 'details' => $details, 'display_name' => $placeholder];
-		$dataTypeContent = (object)[$key => $content];
+		$row = new class{ public function getTranslatedAttribute(){} };
+		$row->required = $required;
+		$row->field = $key;
+		$row->type = $type;
+		$row->details = $details;
+		$row->display_name = $placeholder;
+
+		$dataTypeContent = new class{ public function getKey(){} };
+		$dataTypeContent->{$key} = $content;
+
 		$label = '<label for="'. $key . '">' . $title . '<span class="how_to">You can reference this value with <code>theme(\'' . $key . '\')</code></span></label>';
 		$details = '<input type="hidden" value="' . $details . '" name="' . $key . '_details__theme_field">';
 		$type = '<input type="hidden" value="' . $type . '" name="' . $key . '_type__theme_field">';
