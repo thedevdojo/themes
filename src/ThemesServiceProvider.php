@@ -28,7 +28,6 @@ class ThemesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        dd('hit');
         if (request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*')) {
             $this->addThemesTable();
 
@@ -63,10 +62,10 @@ class ThemesServiceProvider extends ServiceProvider
 
             if (Schema::hasTable('themes')) {
                 $theme = $this->rescue(function () {
-                    return \DevDojo\Themes\Models\Theme::where('active', '=', 1)->first();
+                    return \Themes\Models\Theme::where('active', '=', 1)->first();
                 });
                 if(Cookie::get('theme')){
-                    $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+                    $theme_cookied = \Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
                     if(isset($theme_cookied->id)){
                         $theme = $theme_cookied;
                     }
@@ -97,7 +96,7 @@ class ThemesServiceProvider extends ServiceProvider
      */
     public function addThemeRoutes($router)
     {
-        $namespacePrefix = '\\\DevDojo\\Themes\\Http\\Controllers\\';
+        $namespacePrefix = '\\Themes\\Http\\Controllers\\';
         $router->get('themes', ['uses' => $namespacePrefix.'ThemesController@index', 'as' => 'theme.index']);
         $router->get('themes/activate/{theme}', ['uses' => $namespacePrefix.'ThemesController@activate', 'as' => 'theme.activate']);
         $router->get('themes/options/{theme}', ['uses' => $namespacePrefix.'ThemesController@options', 'as' => 'theme.options']);
@@ -166,7 +165,7 @@ class ThemesServiceProvider extends ServiceProvider
             foreach($middleware_files as $middleware){
                 if($middleware != '.' && $middleware != '..'){
                     include($middleware_folder . '/' . $middleware);
-                    $middleware_classname = 'DevDojo\\Themes\\Middleware\\' . str_replace('.php', '', $middleware);
+                    $middleware_classname = 'Themes\\Middleware\\' . str_replace('.php', '', $middleware);
                     if(class_exists($middleware_classname)){
                         // Dynamically Load The Middleware
                         $this->app->make('Illuminate\Contracts\Http\Kernel')->prependMiddleware($middleware_classname);
