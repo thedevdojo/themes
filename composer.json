@@ -1,6 +1,6 @@
 
 {
-  "name": "Themes",
+  "name": "devdojo/themes",
   "description": "This is a themes package for Laravel",
   "require": {},
   "autoload": {
