@@ -62,10 +62,10 @@ class ThemesServiceProvider extends ServiceProvider
 
             if (Schema::hasTable('themes')) {
                 $theme = $this->rescue(function () {
-                    return \Themes\Models\Theme::where('active', '=', 1)->first();
+                    return \DevDojo\Themes\Models\Theme::where('active', '=', 1)->first();
                 });
                 if(Cookie::get('theme')){
-                    $theme_cookied = \Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+                    $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
                     if(isset($theme_cookied->id)){
                         $theme = $theme_cookied;
                     }
@@ -96,7 +96,7 @@ class ThemesServiceProvider extends ServiceProvider
      */
     public function addThemeRoutes($router)
     {
-        $namespacePrefix = '\\Themes\\Http\\Controllers\\';
+        $namespacePrefix = '\\DevDojo\\Themes\\Http\\Controllers\\';
         $router->get('themes', ['uses' => $namespacePrefix.'ThemesController@index', 'as' => 'theme.index']);
         $router->get('themes/activate/{theme}', ['uses' => $namespacePrefix.'ThemesController@activate', 'as' => 'theme.activate']);
         $router->get('themes/options/{theme}', ['uses' => $namespacePrefix.'ThemesController@options', 'as' => 'theme.options']);
