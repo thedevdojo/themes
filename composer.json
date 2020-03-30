@@ -5,13 +5,13 @@
   "require": {},
   "autoload": {
     "psr-4": {
-      "Themes\\": "src/"
+      "DevDojo\\Themes\\": "src/"
     }
   },
   "extra": {
     "hook": {
       "providers": [
-        "Themes\\ThemesServiceProvider"
+        "DevDojo\\Themes\\ThemesServiceProvider"
       ]
     }
   }
