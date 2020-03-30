@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\Models;
+namespace DevDojo\Themes\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

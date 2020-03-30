@@ -5,7 +5,7 @@ if (!function_exists(theme_field)){
 
 	function theme_field($type, $key, $title, $content = '', $details = '', $placeholder = '', $required = 0){
 
-		$theme = \Themes\Models\Theme::where('folder', '=', ACTIVE_THEME_FOLDER)->first();
+		$theme = \DevDojo\Themes\Models\Theme::where('folder', '=', ACTIVE_THEME_FOLDER)->first();
 
 		$option_exists = $theme->options->where('key', '=', $key)->first();
 
@@ -26,10 +26,10 @@ if (!function_exists(theme_field)){
 if (!function_exists(theme)){
 
 	function theme($key, $default = ''){
-		$theme = \Themes\Models\Theme::where('active', '=', 1)->first();
+		$theme = \DevDojo\Themes\Models\Theme::where('active', '=', 1)->first();
 
 		if(Cookie::get('theme')){
-            $theme_cookied = \Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+            $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
             if(isset($theme_cookied->id)){
                 $theme = $theme_cookied;
             }
@@ -53,10 +53,10 @@ if(!function_exists(theme_folder)){
 			return 'themes/' . THEME_FOLDER . $folder_file;
 		}
 
-		$theme = \Themes\Models\Theme::where('active', '=', 1)->first();
+		$theme = \DevDojo\Themes\Models\Theme::where('active', '=', 1)->first();
 
 		if(Cookie::get('theme')){
-            $theme_cookied = \Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+            $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
             if(isset($theme_cookied->id)){
                 $theme = $theme_cookied;
             }
@@ -74,10 +74,10 @@ if(!function_exists(theme_folder_url)){
 			return url('themes/' . THEME_FOLDER . $folder_file);
 		}
 
-		$theme = \Themes\Models\Theme::where('active', '=', 1)->first();
+		$theme = \DevDojo\Themes\Models\Theme::where('active', '=', 1)->first();
 
 		if(Cookie::get('theme')){
-            $theme_cookied = \Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
+            $theme_cookied = \DevDojo\Themes\Models\Theme::where('folder', '=', Cookie::get('theme'))->first();
             if(isset($theme_cookied->id)){
                 $theme = $theme_cookied;
             }

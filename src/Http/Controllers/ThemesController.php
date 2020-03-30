@@ -1,12 +1,12 @@
 <?php
 
-namespace Themes\Http\Controllers;
+namespace DevDojo\Themes\Http\Controllers;
 
 use Voyager;
 use Illuminate\Http\Request;
-use \Themes\Models\Theme;
+use \DevDojo\Themes\Models\Theme;
 use Illuminate\Support\Facades\File;
-use \Themes\Models\ThemeOptions;
+use \DevDojo\Themes\Models\ThemeOptions;
 use TCG\Voyager\Http\Controllers\Controller;
 
 class ThemesController extends Controller

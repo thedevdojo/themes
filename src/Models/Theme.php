@@ -1,6 +1,6 @@
 <?php
 
-namespace Themes\Models;
+namespace DevDojo\Themes\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,6 +11,6 @@ class Theme extends Model
     protected $fillable = ['name', 'folder', 'version'];
 
     public function options(){
-    	return $this->hasMany('\Themes\Models\ThemeOptions', 'theme_id');
+    	return $this->hasMany('\DevDojo\Themes\Models\ThemeOptions', 'theme_id');
     }
 }
