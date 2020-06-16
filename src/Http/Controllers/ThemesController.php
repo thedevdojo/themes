@@ -188,7 +188,7 @@ class ThemesController extends Controller
 
                 $value = $this->getContentBasedOnType($request, 'themes', $row);
 
-                $option = ThemeOptions::where('voyager_theme_id', '=', $theme->id)->where('key', '=', $key)->first();
+                $option = ThemeOptions::where('theme_id', '=', $theme->id)->where('key', '=', $key)->first();
 
 
                 // If we already have this key with the Theme ID we can update the value
@@ -196,7 +196,7 @@ class ThemesController extends Controller
                     $option->value = $value;
                     $option->save();
                 } else {
-                    ThemeOptions::create(['voyager_theme_id' => $theme->id, 'key' => $key, 'value' => $value]);
+                    ThemeOptions::create(['theme_id' => $theme->id, 'key' => $key, 'value' => $value]);
                 }
             }
         }
