@@ -1,7 +1,7 @@
 <?php
 
 
-if (!function_exists(theme_field)){
+if (!function_exists('theme_field')){
 
 	function theme_field($type, $key, $title, $content = '', $details = '', $placeholder = '', $required = 0){
 
@@ -31,7 +31,7 @@ if (!function_exists(theme_field)){
 
 }
 
-if (!function_exists(theme)){
+if (!function_exists('theme')){
 
 	function theme($key, $default = ''){
 		$theme = \DevDojo\Themes\Models\Theme::where('active', '=', 1)->first();
@@ -54,7 +54,7 @@ if (!function_exists(theme)){
 
 }
 
-if(!function_exists(theme_folder)){
+if(!function_exists('theme_folder')){
 	function theme_folder($folder_file = ''){
 
 		if(defined('THEME_FOLDER') && THEME_FOLDER){
@@ -75,7 +75,7 @@ if(!function_exists(theme_folder)){
 	}
 }
 
-if(!function_exists(theme_folder_url)){
+if(!function_exists('theme_folder_url')){
 	function theme_folder_url($folder_file = ''){
 
 		if(defined('THEME_FOLDER') && THEME_FOLDER){
