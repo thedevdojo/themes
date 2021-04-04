@@ -9,7 +9,7 @@
 			color:rgba(0, 0, 0, 0.55);
 		}
 
-		#theme_options label, :not(#theme_options .toggle-group label){
+		#theme_options label, #theme_options label:not(#theme_options .toggle-group label){
 			font-weight: normal;
 		    font-size: 16px;
 		    width: 100%;
@@ -35,6 +35,10 @@
 			background: none;
     		border: 0px;
 		}
+
+        .voyager .nav-tabs>li.active>a:hover{
+            background-color:#62a8ea;
+        }
 
 	</style>
 
