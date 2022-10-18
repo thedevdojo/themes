@@ -28,7 +28,7 @@ class ThemesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if (request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*')) {
+        if ( request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*') || app()->runningInConsole() ) {
             $this->addThemesTable();
 
             app(Dispatcher::class)->listen('voyager.menu.display', function ($menu) {
