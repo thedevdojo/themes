@@ -3,6 +3,7 @@
 namespace DevDojo\Themes;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use TCG\Voyager\Models\Menu;
 use TCG\Voyager\Models\Role;
 use TCG\Voyager\Models\MenuItem;
@@ -29,7 +30,13 @@ class ThemesServiceProvider extends ServiceProvider
     public function register()
     {
         if ( request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*') || app()->runningInConsole() ) {
-            $this->addThemesTable();
+
+            try {
+                DB::connection()->getPdo();
+                $this->addThemesTable();
+            } catch (\Exception $e) {
+                \Log::error("Error connecting to database: ".$e->getMessage());
+            }
 
             app(Dispatcher::class)->listen('voyager.menu.display', function ($menu) {
                 $this->addThemeMenuItem($menu);
