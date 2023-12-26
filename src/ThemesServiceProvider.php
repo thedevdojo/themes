@@ -22,6 +22,8 @@ class ThemesServiceProvider extends ServiceProvider
             'ThemeOptions',
         ];
 
+    private $themes_folder;
+
     /**
      * Register is loaded every time the voyager themes hook is used.
      *
