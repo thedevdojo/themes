@@ -187,7 +187,7 @@ class ThemesServiceProvider extends ServiceProvider
      */
     private function addThemesTable()
     {
-        if (!Schema::hasTable('themes')) {
+        if (!Schema::hasTable('themes') && config('themes.create_tables')) {
             Schema::create('themes', function (Blueprint $table) {
                 $table->increments('id');
                 $table->string('name');
