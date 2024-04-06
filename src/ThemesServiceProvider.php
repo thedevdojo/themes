@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Blade;
 
 class ThemesServiceProvider extends ServiceProvider
 {
@@ -84,6 +85,7 @@ class ThemesServiceProvider extends ServiceProvider
             $this->themes_folder = config('themes.themes_folder', resource_path('views/themes'));
 
             $this->loadDynamicMiddleware($this->themes_folder, $theme);
+            $this->registerThemeComponents($theme);
 
             // Make sure we have an active theme
             if (isset($theme)) {
@@ -112,6 +114,10 @@ class ThemesServiceProvider extends ServiceProvider
             return redirect(route('voyager.theme.index'));
         });
         $router->delete('themes/delete', ['uses' => $namespacePrefix.'ThemesController@delete', 'as' => 'theme.delete']);
+    }
+
+    private function registerThemeComponents($theme){
+        Blade::anonymousComponentPath(resource_path('views/themes/anchor/components'));
     }
 
     /**
