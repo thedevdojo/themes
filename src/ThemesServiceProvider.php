@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Blade;
+use Laravel\Folio\Folio;
+use Illuminate\Support\Facades\File;
 
 class ThemesServiceProvider extends ServiceProvider
 {
@@ -84,6 +87,8 @@ class ThemesServiceProvider extends ServiceProvider
             $this->themes_folder = config('themes.themes_folder', resource_path('views/themes'));
 
             $this->loadDynamicMiddleware($this->themes_folder, $theme);
+            $this->registerThemeComponents($theme);
+            $this->registerThemeFolioDirectory($theme);
 
             // Make sure we have an active theme
             if (isset($theme)) {
@@ -112,6 +117,21 @@ class ThemesServiceProvider extends ServiceProvider
             return redirect(route('voyager.theme.index'));
         });
         $router->delete('themes/delete', ['uses' => $namespacePrefix.'ThemesController@delete', 'as' => 'theme.delete']);
+    }
+
+    private function registerThemeComponents($theme){
+        Blade::anonymousComponentPath(resource_path('views/themes/' . $theme->folder . '/components/elements'));
+        Blade::anonymousComponentPath(resource_path('views/themes/' . $theme->folder . '/components'));
+    }
+
+    private function registerThemeFolioDirectory($theme){
+        if (File::exists(resource_path('views/themes/' . $theme->folder . '/pages'))) {
+            Folio::path(resource_path('views/themes/' . $theme->folder . '/pages'))->middleware([
+                '*' => [
+                    //
+                ],
+            ]);
+        }
     }
 
     /**
