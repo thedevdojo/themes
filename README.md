@@ -42,14 +42,16 @@ You will want to publish the themes config, and you will now see a new config lo
 
 return [
 
-    'themes_folder' => resource_path('views/themes'),
+    'folder' => resource_path('themes'),
     'publish_assets' => true,
     'create_tables' => true
 
 ];
 ```
 
-Now, you can choose an alternate location for your themes folder. By default this will be put into the `resources/views` folder; however, you can change that to any location you would like.
+Now, you can choose an alternate location for your themes folder. By default this will be put into the `resources` folder; however, you can change that to any location you would like.
+
+> Warning, If you add the themes folder into the `resources/views` folder and you run `php artisan optimize` you may get an error that it cannot find certain components. This is because it will search all the `.blade.php` files inside the views folder. So, this may not be the best place to put your themes. Instead this package will register only the views of the active theme.
 
 Additionally, you can set **publish_assets** to *true* or *false*, if it is set to *true* anytime the themes directory is scanned it will publish the `assets` folder in your theme to the public folder inside a new `themes` folder. Set this to *false* and this will no longer happen.
 

@@ -32,7 +32,7 @@ class ThemesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ( request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*') || app()->runningInConsole() ) {
+        if ( app()->runningInConsole() ) {
 
             try {
                 DB::connection()->getPdo();
@@ -66,6 +66,8 @@ class ThemesServiceProvider extends ServiceProvider
     {
         try{
 
+            dd(config('themes.folder'));
+
             $this->loadViewsFrom(__DIR__.'/../resources/views', 'themes');
 
             $theme = '';
@@ -84,7 +86,7 @@ class ThemesServiceProvider extends ServiceProvider
 
             view()->share('theme', $theme);
 
-            $this->themes_folder = config('themes.themes_folder', resource_path('views/themes'));
+            $this->themes_folder = config('themes.folder', resource_path('views/themes'));
 
             $this->loadDynamicMiddleware($this->themes_folder, $theme);
             $this->registerThemeComponents($theme);
