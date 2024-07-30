@@ -58,7 +58,7 @@
         <div class="panel">
         	<div class="panel-body">
 
-	        		@if(file_exists(config('themes.folder', resource_path('views/themes')) . '/' . $theme->folder . '/options.blade.php'))
+	        		@if(file_exists(config('themes.folder', resource_path('themes')) . '/' . $theme->folder . '/options.blade.php'))
 	        			<?php if (!defined('ACTIVE_THEME_FOLDER')) { define("ACTIVE_THEME_FOLDER", $theme->folder); } ?>
 	        			<form action="{{ route('voyager.theme.options', $theme->folder) }}" method="POST" enctype="multipart/form-data">
 

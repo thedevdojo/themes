@@ -14,7 +14,7 @@ class ThemesController extends Controller
     private $themes_folder = '';
 
     public function __construct(){
-        $this->themes_folder = config('themes.folder', resource_path('views/themes'));
+        $this->themes_folder = config('themes.folder', resource_path('themes'));
     }
 
     public function index(){
