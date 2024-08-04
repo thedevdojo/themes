@@ -32,7 +32,7 @@ class ThemesServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        if ( request()->is(config('voyager.prefix')) || request()->is(config('voyager.prefix').'/*') || app()->runningInConsole() ) {
+        if ( app()->runningInConsole() ) {
 
             try {
                 DB::connection()->getPdo();
@@ -66,7 +66,9 @@ class ThemesServiceProvider extends ServiceProvider
     {
         try{
 
-            $this->loadViewsFrom(__DIR__.'/../resources/views', 'themes');
+        //    dd(config('themes.folder'));
+
+            //$this->loadViewsFrom(config('themes.folder'), 'themes');
 
             $theme = '';
 
@@ -84,17 +86,17 @@ class ThemesServiceProvider extends ServiceProvider
 
             view()->share('theme', $theme);
 
-            $this->themes_folder = config('themes.themes_folder', resource_path('views/themes'));
+            $folder = config('themes.folder', resource_path('themes'));
 
-            $this->loadDynamicMiddleware($this->themes_folder, $theme);
+            $this->loadDynamicMiddleware($folder, $theme);
             $this->registerThemeComponents($theme);
             $this->registerThemeFolioDirectory($theme);
 
             // Make sure we have an active theme
             if (isset($theme)) {
-                $this->loadViewsFrom($this->themes_folder.'/'.@$theme->folder, 'theme');
+                $this->loadViewsFrom($folder.'/'.@$theme->folder, 'theme');
             }
-            $this->loadViewsFrom($this->themes_folder, 'themes_folder');
+            //$this->loadViewsFrom($folder, 'themes_folder');
 
         } catch(\Exception $e){
             return $e->getMessage();
@@ -120,13 +122,13 @@ class ThemesServiceProvider extends ServiceProvider
     }
 
     private function registerThemeComponents($theme){
-        Blade::anonymousComponentPath(resource_path('views/themes/' . $theme->folder . '/components/elements'));
-        Blade::anonymousComponentPath(resource_path('views/themes/' . $theme->folder . '/components'));
+        Blade::anonymousComponentPath(config('themes.folder') . '/' . $theme->folder . '/components/elements');
+        Blade::anonymousComponentPath(config('themes.folder') . '/' . $theme->folder . '/components');
     }
 
     private function registerThemeFolioDirectory($theme){
-        if (File::exists(resource_path('views/themes/' . $theme->folder . '/pages'))) {
-            Folio::path(resource_path('views/themes/' . $theme->folder . '/pages'))->middleware([
+        if (File::exists( config('themes.folder') . '/' . $theme->folder . '/pages')) {
+            Folio::path( config('themes.folder') . '/' . $theme->folder . '/pages')->middleware([
                 '*' => [
                     //
                 ],
@@ -182,11 +184,11 @@ class ThemesServiceProvider extends ServiceProvider
         }
     }
 
-    private function loadDynamicMiddleware($themes_folder, $theme){
+    private function loadDynamicMiddleware($folder, $theme){
         if (empty($theme)) {
             return;
         }
-        $middleware_folder = $themes_folder . '/' . $theme->folder . '/middleware';
+        $middleware_folder = $folder . '/' . $theme->folder . '/middleware';
         if(file_exists( $middleware_folder )){
             $middleware_files = scandir($middleware_folder);
             foreach($middleware_files as $middleware){
