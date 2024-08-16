@@ -17,7 +17,7 @@ if (!function_exists('theme_field')){
 		$row->required = $required;
 		$row->field = $key;
 		$row->type = $type;
-		$row->details = $details;
+		$row->details = json_decode($details);
 		$row->display_name = $placeholder;
 
 		$dataTypeContent = new class{ public function getKey(){} };
